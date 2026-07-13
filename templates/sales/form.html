@@ -1,0 +1,40 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Create Sale - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">Create Sale</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="customer" class="form-label">Customer (Optional)</label>
+                    <select class="form-control" id="customer" name="customer_id">
+                        <option value="">Select a customer or leave blank</option>
+                        {% for customer in customers %}
+                        <option value="{{ customer.pk }}">{{ customer.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="total_amount" class="form-label">Total Amount</label>
+                    <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01" required>
+                </div>
+                <div class="mb-3">
+                    <label for="tax" class="form-label">Tax</label>
+                    <input type="number" class="form-control" id="tax" name="tax" step="0.01" value="0">
+                </div>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Sale</button>
+                <a href="{% url 'sales:list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Stock Out - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4"><i class="bi bi-box-arrow-out"></i> Stock Out</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="product" class="form-label">Product</label>
+                    <select class="form-control" id="product" name="product_id" required>
+                        <option value="">Select a product</option>
+                        {% for product in products %}
+                        <option value="{{ product.pk }}">{{ product.name }} (Stock: {{ product.stock_quantity }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="reference" class="form-label">Reference Number</label>
+                    <input type="text" class="form-control" id="reference" name="reference" placeholder="INV-123456">
+                </div>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Remove Stock</button>
+                <a href="{% url 'inventory:list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

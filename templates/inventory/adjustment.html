@@ -1,0 +1,36 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Stock Adjustment - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4"><i class="bi bi-arrow-left-right"></i> Stock Adjustment</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="product" class="form-label">Product</label>
+                    <select class="form-control" id="product" name="product_id" required>
+                        <option value="">Select a product</option>
+                        {% for product in products %}
+                        <option value="{{ product.pk }}">{{ product.name }} (Current: {{ product.stock_quantity }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="new_quantity" class="form-label">New Quantity</label>
+                    <input type="number" class="form-control" id="new_quantity" name="new_quantity" min="0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="reason" class="form-label">Reason</label>
+                    <input type="text" class="form-control" id="reason" name="reason" placeholder="e.g., Physical count adjustment" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Adjust Stock</button>
+                <a href="{% url 'inventory:list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

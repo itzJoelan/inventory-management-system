@@ -1,0 +1,60 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}{{ order.order_number }} - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">{{ order.order_number }}</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Order Items</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.unit_price }}</td>
+                                    <td>${{ item.get_total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Order Details</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Supplier:</strong> {{ order.supplier.name }}</p>
+                    <p><strong>Order Date:</strong> {{ order.order_date|date:"M d, Y" }}</p>
+                    <p><strong>Expected Delivery:</strong> {{ order.expected_delivery|date:"M d, Y" }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-info">{{ order.get_status_display }}</span></p>
+                    <p><strong>Total Amount:</strong> <h4>${{ order.total_amount }}</h4></p>
+                    {% if order.status == 'pending' %}
+                    <a href="{% url 'purchase_orders:receive' order.pk %}" class="btn btn-success w-100">Mark as Received</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

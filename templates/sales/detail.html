@@ -1,0 +1,58 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}{{ sale.invoice_number }} - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">{{ sale.invoice_number }}</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Sale Items</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in sale.items.all %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.unit_price }}</td>
+                                    <td>${{ item.get_total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Sale Details</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Customer:</strong> {{ sale.customer.name|default:"N/A" }}</p>
+                    <p><strong>Sale Date:</strong> {{ sale.sale_date|date:"M d, Y" }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-info">{{ sale.get_status_display }}</span></p>
+                    <p><strong>Subtotal:</strong> ${{ sale.total_amount }}</p>
+                    <p><strong>Tax:</strong> ${{ sale.tax }}</p>
+                    <p><strong>Grand Total:</strong> <h4>${{ sale.total_amount|add:sale.tax }}</h4></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

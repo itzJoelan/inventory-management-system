@@ -1,0 +1,20 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Receive Inventory - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">Receive Inventory for {{ order.order_number }}</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p class="text-muted">Please confirm that you want to mark this purchase order as received.</p>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Confirm Receipt</button>
+                <a href="{% url 'purchase_orders:detail' order.pk %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

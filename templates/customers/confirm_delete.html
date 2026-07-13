@@ -1,0 +1,18 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Delete Customer - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Delete Customer</h4>
+        <p>Are you sure you want to delete <strong>{{ customer.name }}</strong>? This action cannot be undone.</p>
+        <hr>
+        <form method="POST" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'customers:list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

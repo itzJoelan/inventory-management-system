@@ -1,0 +1,50 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}Purchase Report - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3"><i class="bi bi-receipt"></i> Purchase Report</h1>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <p><strong>Total Purchases:</strong> <h4>${{ total_purchases }}</h4></p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>PO Number</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.order_number }}</td>
+                            <td>{{ order.supplier.name }}</td>
+                            <td>{{ order.order_date|date:"M d, Y" }}</td>
+                            <td>${{ order.total_amount }}</td>
+                            <td><span class="badge bg-info">{{ order.get_status_display }}</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No purchases found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base/dashboard_layout.html' %}
+
+{% block title %}{{ category.name }} - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">{{ category.name }}</h1>
+        <div>
+            <a href="{% url 'categories:edit' category.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</a>
+            <a href="{% url 'categories:delete' category.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" class="img-fluid mb-3" alt="{{ category.name }}" style="max-height: 300px; object-fit: cover;">
+                    {% endif %}
+                    <h5>Description</h5>
+                    <p>{{ category.description|linebreaks }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Category Info</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ category.name }}</p>
+                    <p><strong>Created:</strong> {{ category.created_at|date:"M d, Y" }}</p>
+                    <p><strong>Products:</strong> <span class="badge bg-primary">{{ category.product_count }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
