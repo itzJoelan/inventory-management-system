@@ -1,0 +1,144 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Welcome - Inventory Management System{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-box2-heart"></i> <strong>Inventory Manager</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item">
+                    <a class="btn btn-primary ms-2" href="{% url 'core:login' %}">Get Started</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" style="background: linear-gradient(135deg, #3C453E 0%, #181D2E 100%); color: white; padding: 120px 0;">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">Professional Inventory Management</h1>
+        <p class="lead mb-4">Streamline your inventory, boost efficiency, and grow your business with our modern ERP system</p>
+        <a href="{% url 'core:login' %}" class="btn btn-light btn-lg me-3">Login</a>
+        <a href="{% url 'core:register' %}" class="btn btn-outline-light btn-lg">Register</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-box-seam" style="font-size: 3rem; color: #3C453E;"></i>
+                        <h5 class="card-title mt-3">Product Management</h5>
+                        <p class="card-text">Comprehensive product catalog with SKU, barcode, and pricing management</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-graph-up" style="font-size: 3rem; color: #3C453E;"></i>
+                        <h5 class="card-title mt-3">Analytics & Reports</h5>
+                        <p class="card-text">Real-time insights with beautiful charts and exportable reports</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-shield-check" style="font-size: 3rem; color: #3C453E;"></i>
+                        <h5 class="card-title mt-3">Secure & Reliable</h5>
+                        <p class="card-text">Enterprise-grade security with role-based access control</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">About Inventory Manager</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <p class="lead text-muted">
+                    Inventory Manager is a professional-grade inventory management system designed for modern businesses.
+                    Built with Django, it provides a seamless experience for managing products, suppliers, customers,
+                    purchase orders, and sales with real-time analytics.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <h3 class="fw-bold" style="color: #3C453E;">100%</h3>
+                <p class="text-muted">Uptime Guarantee</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="fw-bold" style="color: #3C453E;">10K+</h3>
+                <p class="text-muted">Active Users</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="fw-bold" style="color: #3C453E;">24/7</h3>
+                <p class="text-muted">Support</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h3 class="fw-bold" style="color: #3C453E;">∞</h3>
+                <p class="text-muted">Scalability</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Get in Touch</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4">
+    <div class="container">
+        <p>&copy; 2024 Inventory Management System. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}

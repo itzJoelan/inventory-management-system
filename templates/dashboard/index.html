@@ -1,0 +1,171 @@
+{% extends 'base/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Inventory Management System{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3"><i class="bi bi-house-door"></i> Dashboard</h1>
+        <div>
+            <a href="{% url 'products:create' %}" class="btn btn-primary me-2"><i class="bi bi-plus"></i> Add Product</a>
+            <a href="{% url 'inventory:stock_in' %}" class="btn btn-success"><i class="bi bi-box-arrow-in"></i> Stock In</a>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-0">Total Products</p>
+                            <h3 class="mb-0">{{ total_products }}</h3>
+                        </div>
+                        <i class="bi bi-box2-heart" style="font-size: 2.5rem; color: #3C453E; opacity: 0.1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-0">Low Stock Items</p>
+                            <h3 class="mb-0 text-warning">{{ low_stock_items }}</h3>
+                        </div>
+                        <i class="bi bi-exclamation-circle" style="font-size: 2.5rem; color: #ff9800; opacity: 0.1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-0">Out of Stock</p>
+                            <h3 class="mb-0 text-danger">{{ out_of_stock }}</h3>
+                        </div>
+                        <i class="bi bi-x-circle" style="font-size: 2.5rem; color: #dc3545; opacity: 0.1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card dashboard-card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-0">Categories</p>
+                            <h3 class="mb-0">{{ total_categories }}</h3>
+                        </div>
+                        <i class="bi bi-tag" style="font-size: 2.5rem; color: #3C453E; opacity: 0.1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-graph-up"></i> Inventory Overview</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="inventoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Stock Status</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'products:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-box-seam"></i> Manage Products
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'suppliers:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-shop"></i> Suppliers
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'sales:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-receipt"></i> Sales
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'reports:list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-file-earmark-text"></i> Reports
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Inventory Chart
+    const inventoryCtx = document.getElementById('inventoryChart').getContext('2d');
+    new Chart(inventoryCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Products',
+                data: [{{ total_products }}, {{ total_products }}, {{ total_products }}, {{ total_products }}, {{ total_products }}, {{ total_products }}],
+                backgroundColor: '#3C453E'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // Stock Status Chart
+    const stockCtx = document.getElementById('stockChart').getContext('2d');
+    new Chart(stockCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['In Stock', 'Low Stock', 'Out of Stock'],
+            datasets: [{
+                data: [{{ total_products|add:low_stock_items }}, {{ low_stock_items }}, {{ out_of_stock }}],
+                backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+{% endblock %}
